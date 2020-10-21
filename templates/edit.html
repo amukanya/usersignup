@@ -15,9 +15,12 @@
         <label>Email adress:
            <input name="email" type="email" />
         </label> 
+        {% if email_error %}
+            <p class="email_error">{{email_error}}</p>         
+        {% endif %}
         <br>
 
-        <label>Password
+        <label>Password:
             <input name="password" type="password" />
         </label> 
         {% if pass_error %}
@@ -25,7 +28,7 @@
         {% endif %}
         <br>
                      
-        <label>Password Confirmation
+        <label>Password Confirmation:
             <input name="confpassword" type="password" />
         </label> 
         {% if confpass_error %}
