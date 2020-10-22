@@ -10,6 +10,7 @@ app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 def welcome():
     at = '@'
     point = '.'
+    space = ' '
     username = request.form['username']
     password = request.form['password']
     confpassword = request.form['confpassword']
@@ -21,26 +22,39 @@ def welcome():
     if username =='':
         name_error = 'You did not enter a username.'
         username =''
-    elif len(username) <= 3:
+    elif space in username:
+        name_error = 'Do not put space in your username.'
+        username =''
+    elif len(username) < 3:
         name_error = 'Username must have more than 3 letters.'
         username =''
     
     if password =='':
         pass_error = 'You did not enter a password.'
         password =''
-    elif len(password) <= 3:
-        name_error = 'Username must have more than 3 letters.'
-        username =''
-    else:
-        if confpassword != password:
-            confpass_error = 'Make sure Confirmatiom password matches password.'
-            confpassword =''
+    elif len(password) < 3:
+        pass_error = 'Username must have more than 3 letters.'
+        password =''
+    elif space in password:
+        pass_error = 'Do not put space in your password.'
+        password ='' 
+        confpass_error = ''
+        confpassword = ''
+    
+    elif confpassword =='':
+        confpass_error = 'You did not enter the confirmation password.'
+        confpassword =''
+    
+    elif confpassword != password:
+        confpass_error = 'The confirmatiom password does not match the password.'
+        confpassword =''
+    
     if email !='':
         if len(email) < 3:
-            email_error = 'Your email is too short.'
+            email_error = 'Your email must have more than 3 letters.'
             email =''
         elif len(email) > 20:
-            email_error = 'Your email is too long.'
+            email_error = 'Your email must have less than 20 letters.'
         else:
             if not at in email:
                 email_error = 'You are missing -@- .'
