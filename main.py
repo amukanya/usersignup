@@ -5,20 +5,28 @@ app = Flask(__name__)
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
 
-
+#Route for the welcome page and error page
 @app.route("/welcome", methods=['POST'])
 def welcome():
+    
+    #creating variables to use for input requiremetns
     at = '@'
     point = '.'
     space = ' '
+    
+    #getting and assigning input for requests to variable
     username = request.form['username']
     password = request.form['password']
     confpassword = request.form['confpassword']
     email = request.form['email']
+    
+    #initializing all the error statements
     name_error =''
     pass_error =''
     confpass_error =''
     email_error =''
+    
+    # stating condition for inputs
     if username =='':
         name_error = 'You did not enter a username.'
         username =''
@@ -63,15 +71,18 @@ def welcome():
                 email_error = 'You are missing -.- .'
                 email =''
     
+    #Rendering a welcome page if none errors were found
     if (not name_error and not confpass_error) and (not pass_error and not email_error):
         username_bold = "<strong>" + username + "</strong>"
         sentence = "Welcome, " + username_bold
         content = "<p>" + sentence + "</p>"
         return content
+    #Rendering a page with errors founds
     else:
         return render_template('edit.html', name_error = name_error, pass_error = pass_error, confpass_error = confpass_error,email_error = email_error, username = username, password = password, confpassword = confpassword, email = email)
 
 @app.route("/")
 def index():
+    #Rendering the initial user sign up page
     return render_template('edit.html')
 app.run()
